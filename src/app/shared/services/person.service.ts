@@ -175,7 +175,6 @@ export class PersonService {
         let listPersonCopy = [...this.listPerson_S()];
         listPersonCopy[index] = person;
         this.listPerson_S.set(listPersonCopy);
-        console.log(this.listPerson_S());
         this.PersonRepository.saveListPerson();
         this.messageService.add({ severity: 'success', summary: 'Succès', detail: 'Résident mis à jour' });
     }

@@ -9,6 +9,7 @@ import { AileRepository } from '../../shared/repository/aile.repository';
 import { IPersonUI } from '../../shared/models/person';
 import { IAile } from '../../shared/models/aile';
 import { PersonFormFactory } from '../../shared/helper/formFactory/person';
+import { listMonthsWithNumber } from '../../shared/utils/others';
 
 
 @Component({
@@ -168,18 +169,15 @@ export class ListPersonsComponent implements OnInit {
     });
 
     ref.onClose.pipe(take(1)).subscribe((newWeight) => {
-      if (newWeight) {
+      console.log(newWeight)
+      let monthNumber = listMonthsWithNumber.find(month => month.name === monthWeighted)?.id;
+      let dateForSave = `01-${monthNumber}-${year}`
 
-        //on crée une variable pour stocker la date du jour au format "month-year" 
-        // pour pouvoir comparer avec la date du poids ajouté et éviter de modifier 
-        // un poids d'un mois précédent
-        //on gère les 0 pour les mois inférieurs à 10 pour que le format soit toujours le même
-        let currentMonth = (new Date().getMonth() + 1).toString().padStart(2, '0');
-        let currentYear = new Date().getFullYear();
-        let currentMonthYear = `${currentMonth}-${currentYear}`;
-        //on slice 3 pour enlever le jour de la date du poids et ne garder que le mois et l'année pour la comparaison
-        //car on encode que le mois et l'année dans la date du poids pour éviter les problèmes de comparaison de date avec les jours
-        let ifExistWeightForMonth = person.listWeight.find((weightEntry) => (weightEntry.date).slice(3) === currentMonthYear);
+      if (newWeight) {
+        //converti le moi en toute lettre en chiffre
+
+        let ifExistWeightForMonth = person.listWeight.find((weight) => (weight.date) === dateForSave);
+        
         //c'est qu'on est sur le même mois et la même année que le poids ajouté, on peut donc modifier le poids du mois en cours
         if(ifExistWeightForMonth){
           person.listWeight = person.listWeight.map((weightEntry) => {
@@ -188,8 +186,17 @@ export class ListPersonsComponent implements OnInit {
             }
             return weightEntry;
           })
+
           this.personService.updatePerson(person);
         }
+        else{ //sinon on ajoute un nouveau poids pour le mois en cours
+          person.listWeight = [...person.listWeight, { date: dateForSave, weight: newWeight }];
+          this.personService.updatePerson(person);
+        }
+      }
+      else if(newWeight === 0){ //encoder à 0 surement donc on retire cette ligne de poids
+          person.listWeight = person.listWeight.filter((weight) => weight.date !== dateForSave);
+          this.personService.updatePerson(person);
       }
     })
   }

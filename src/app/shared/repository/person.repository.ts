@@ -53,11 +53,9 @@ export class PersonRepository extends dbFirebase{
 
     async saveListPerson() {
         //copie car writeBatch ne supporte pas les objets avec des propriétés en lecture seule comme les signaux et les maps
-        console.log("listPerson_S to save in firestore : ", this.listPerson_S());
         let listPersonCopy = [...this.listPerson_S().map(p => PersonMapper.mapper_personUI_personFirestore(p))];
         const batch = this.createBatch();
 
-        console.log("listPersonCopy to save in firestore : ", listPersonCopy);
         listPersonCopy.forEach(person => {
             const ref = person.id ? this.getById(person.id) : this.generateId_docref(); // génère un id si absent
             batch.set(ref, person);

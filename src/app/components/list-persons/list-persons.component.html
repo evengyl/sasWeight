@@ -206,7 +206,7 @@
                                             @for(monthWeighted of mapperWeight[1]; track monthWeighted.monthStr)
                                             {
                                                 <p-chip 
-                                                    (click)="editMonthClicked(person, monthWeighted, mapperWeight[0])"
+                                                    (click)="editMonthClicked(person, monthWeighted.monthStr, mapperWeight[0])"
                                                     class="cursor-pointer"
                                                     (keydown.enter)="null"
                                                 >
