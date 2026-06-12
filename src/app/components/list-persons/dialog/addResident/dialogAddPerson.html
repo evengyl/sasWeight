@@ -6,6 +6,8 @@
         <form [formGroup]="personToAddForm">
 
             <div class="flex flex-col gap-2 pb-4">
+
+
                 <p-divider /> 
                 <input
                     pSize="small"
@@ -45,18 +47,16 @@
                 @if (personToAddForm.controls['chambreNumber'].invalid && personToAddForm.controls['chambreNumber'].touched) {
                     <p-message severity="error" size="small" variant="simple">Format accepté 0.00x et -1.00x</p-message>
                 }
- 
-                <p-select
-                    id="aile_name"
-                    size="small" class="w-full" variant="filled"
-                    [options]="listAiles"
-                    optionLabel="label"
-                    optionValue="label"
-                    formControlName="aileName"
-                    placeholder="Sélectionner une aile"
-                    data-testid="select-aile-name"
+                
+                <p-selectbutton 
+                    [options]="stateOptions" 
+                    formControlName="aileName" 
+                    optionLabel="label" 
+                    optionValue="value" 
+                    styleClass="styleClass"
                 />
-                 <br /><br /><p-divider />
+
+                <br /><br /><p-divider />
 
                 @if (personToAddForm.invalid && personToAddForm.touched) {
                     <p-message severity="error" size="small" variant="simple">Formulaire mal rempli.</p-message>

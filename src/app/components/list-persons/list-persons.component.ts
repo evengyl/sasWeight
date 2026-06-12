@@ -217,12 +217,12 @@ export class ListPersonsComponent implements OnInit {
   getRowBgColor(person: IPersonUI): string {
     if(this.aileRepository.getOneByLabel(person.aileName)?.label){
       switch(person.aileName){
-        case "Saphir": return '#0F52BA';
-        case "Azurite": return '#3c7db1';
-        case "Améthyste": return '#9b59b6';
-        case "Topaze": return '#f1c40f';
-        case "Emeraude": return '#50c895';
-        case "Ambre": return '#ff9800';
+        case "Saphir": return '#0f53ba80';
+        case "Azurite": return '#3c7cb180';
+        case "Améthyste": return '#9b59b680';
+        case "Topaze": return '#f1c40f80';
+        case "Emeraude": return '#50c89580';
+        case "Ambre": return '#ff980080';
       }
     }
     return '';

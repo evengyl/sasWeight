@@ -162,6 +162,7 @@ export class PersonService {
 
             return {
                 label: `${person.name} ${person.surname}`,
+                aileName: person.aileName,
                 data: data
             };
         });

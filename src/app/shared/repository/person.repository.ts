@@ -1,7 +1,6 @@
-import { inject, Injectable, NgZone, signal, WritableSignal } from "@angular/core";
-import { deleteDoc, doc, getDocs, onSnapshot } from "@angular/fire/firestore";
+import { Injectable, signal, WritableSignal } from "@angular/core";
+import { getDocs } from "@angular/fire/firestore";
 import { IPersonFirestore, IPersonUI } from "../models/person";
-import { BehaviorSubject } from "rxjs";
 import { PersonMapper } from "../mapper/person.mapper";
 import { dbFirebase } from "../core/dbFirebase";
 import { PersonsToLoad } from "../core/mocksDataTest/person.mock";
@@ -22,6 +21,9 @@ export class PersonRepository extends dbFirebase{
     async deleteAllAndRefill(): Promise<void> {
        await this.deleteAllPersons(); // vide la collection
        this.listPerson_S.set(PersonsToLoad); // charge les données de test
+       this.listPerson_S().forEach((person) => {
+          person.id = this.generateId_id(); // génère un id pour chaque personne
+       })
        await this.saveListPerson(); // sauvegarde la collection vide pour supprimer les documents existants
     }
 

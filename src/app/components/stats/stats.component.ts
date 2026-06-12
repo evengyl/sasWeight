@@ -1,7 +1,8 @@
 import { isPlatformBrowser } from '@angular/common';
-import { ChangeDetectorRef, Component, effect, inject, PLATFORM_ID } from '@angular/core';
+import { ChangeDetectorRef, Component, effect, inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { PersonService } from '../../shared/services/person.service';
 import { listMonths } from '../../shared/utils/others';
+import { AileRepository } from '../../shared/repository/aile.repository';
 
 @Component({
   selector: 'app-stats',
@@ -9,20 +10,21 @@ import { listMonths } from '../../shared/utils/others';
   templateUrl: './stats.component.html',
   styleUrl: './stats.component.scss',
 })
-export class StatsComponent {
+export class StatsComponent implements OnInit {
 
   private readonly cd = inject(ChangeDetectorRef);
-  platformId = inject(PLATFORM_ID);
-
+  private readonly platformId = inject(PLATFORM_ID);
   private readonly personService = inject(PersonService);
+  private readonly aileRepository = inject(AileRepository);
 
 
 
     dataChart: any;
     optionsChart: any;
+    listAiles : any
 
     ngOnInit() {
-        this.initChart();
+        this.listAiles = this.aileRepository.get();
     }
 
     constructor() {
@@ -41,12 +43,19 @@ export class StatsComponent {
         const textColor = documentStyle.getPropertyValue('--p-text-color');
         const textColorSecondary = documentStyle.getPropertyValue('--p-text-muted-color');
         const surfaceBorder = documentStyle.getPropertyValue('--p-content-border-color');
+        let datasetsGlobal = this.personService.chartData_S()
 
-    
-        this.dataChart = {
-            labels: listMonths,            
-            datasets: this.personService.chartData_S()
-        };
+        let datasetsPerAilename = this.listAiles
+        for(let aile of datasetsPerAilename){
+            aile.datasets = [];
+            aile.labels = listMonths;
+            let dataset = datasetsGlobal.filter(d => d.aileName === aile.label);
+            if(dataset) {
+                aile.datasets = dataset
+            }                
+        }
+
+        this.dataChart = datasetsPerAilename
     
         this.optionsChart = {
           maintainAspectRatio: false,

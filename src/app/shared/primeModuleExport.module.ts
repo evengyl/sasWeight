@@ -36,7 +36,7 @@ import { ChipModule } from 'primeng/chip';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { DialogService } from 'primeng/dynamicdialog';
 import { InputNumberModule } from 'primeng/inputnumber';
-
+import { SelectButtonModule } from 'primeng/selectbutton';
 
 
 
@@ -95,7 +95,8 @@ const preset = definePreset(Aura, {
     ChipModule,
     DynamicDialogModule,
     DialogModule,
-    InputNumberModule
+    InputNumberModule,
+    SelectButtonModule
   ],
   providers: [
     providePrimeNG({
@@ -155,7 +156,8 @@ const preset = definePreset(Aura, {
     ChipModule,
     DynamicDialogModule,
     DialogModule,
-    InputNumberModule
+    InputNumberModule,
+    SelectButtonModule
   ],
 })
 export class PrimeExportModule {}

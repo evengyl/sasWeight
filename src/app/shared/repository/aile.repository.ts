@@ -2,18 +2,10 @@ import { Injectable } from "@angular/core";
 import { IAile } from "../models/aile";
 
 
-
-export interface IAileRepository{
-    get(): IAile[];
-    getOneByLabel(label: string): IAile | undefined;
-}
-
-
-
 @Injectable({
     providedIn: 'root'
 })
-export class AileRepository implements IAileRepository {
+export class AileRepository{
 
     protected ailes: IAile[] = [
         {"label": "Saphir"}, 

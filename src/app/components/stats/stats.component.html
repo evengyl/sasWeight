@@ -8,9 +8,17 @@
             </div>
             <div class="mt-4">
             </div>
-            <div class="bg-surface-50 dark:bg-surface-950 px-6 py-8 md:px-12 lg:px-20">
-                <p-chart type="line" [data]="dataChart" [options]="optionsChart" class="h-[30rem]" />
-            </div>
+            @for (item of dataChart; track $index) {
+
+                <div class="bg-surface-50 dark:bg-surface-950 px-6 py-8 md:px-12 lg:px-20">
+                    <p-chart 
+                        type="line" 
+                        [data]="item" 
+                        [options]="optionsChart"
+                        class="h-[20rem]"
+                    />
+                </div>           
+            }
         </div>
     </div>
 </div>

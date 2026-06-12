@@ -16,24 +16,19 @@ export class DialogAddPerson implements OnInit {
 
     private readonly ref = inject(DynamicDialogRef);
 
-    private readonly fb = inject(FormBuilder)
-
-    personToAdd : IPersonFirestore = {
-        name: '',
-        surname: '',
-        listWeight: [],
-        chambreNumber: '',
-        aileName: ''
-    };
-
     personToAddForm = PersonFormFactory.createPersonToAddForm()
-
     listAiles : IAile[] = null
 
+    // pour éviter les flash de l'interface qui montre que le dialog est encore ouvert alors qu'on est en train de le fermer
     isClosing = false;
+
+
+     stateOptions: { label: string; value: string }[] = [];
+    value: string = 'one-way';
 
     constructor() {
         this.listAiles = new AileRepository().get();
+        this.stateOptions = this.listAiles.map(aile => ({ label: aile.label, value: aile.label }));
     }
 
     ngOnInit() {
