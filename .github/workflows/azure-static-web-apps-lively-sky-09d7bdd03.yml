@@ -3,8 +3,8 @@ name: Azure Static Web Apps CI/CD
 on:
   workflow_dispatch:
   push:
-    tags:
-      - 'v*'
+    branches: 
+      - main
 
 jobs:
   build_and_deploy_job:
