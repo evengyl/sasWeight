@@ -1,4 +1,4 @@
-<div class="bg-surface-50 dark:bg-surface-950 px-6 py-20 md:px-12 lg:px-20 pt-0">
+<div class="bg-surface-50 dark:bg-surface-950 px-6 py-20 md:px-0 lg:px-20 pt-0">
 
 <form [formGroup]="personToEditForm">
     <div class="card flex flex-col">
@@ -40,31 +40,31 @@
             <ng-template #header>
                 <tr>
                     <th scope="col" style="width: 5%"></th>
-                    <th scope="col" pSortableColumn="name" style="width:10%">
+                    <th scope="col" pSortableColumn="name">
                         <div class="flex items-center gap-2">
                             Nom
                             <p-sortIcon field="name" />
                         </div>
                     </th>
-                    <th scope="col" pSortableColumn="surname" style="width:10%">
+                    <th scope="col" pSortableColumn="surname">
                         <div class="flex items-center gap-2">
                             Prénom
                             <p-sortIcon field="surname" />
                         </div>
                     </th>
-                    <th scope="col" pSortableColumn="chambreNumber" style="width:10%">
+                    <th scope="col" pSortableColumn="chambreNumber">
                         <div class="flex items-center gap-2">
                             Chambre
                             <p-sortIcon field="chambreNumber" />
                         </div>
                     </th>
-                    <th scope="col" pSortableColumn="aileName" style="width:10%">
+                    <th scope="col" pSortableColumn="aileName">
                         <div class="flex items-center gap-2">
                             Aile
                             <p-sortIcon field="aileName" />
                         </div>
                     </th>
-                    <th scope="col" style="width:10%">Action</th>
+                    <th scope="col">Action</th>
                 </tr>
             </ng-template>
 

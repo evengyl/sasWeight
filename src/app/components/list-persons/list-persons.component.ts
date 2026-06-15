@@ -142,7 +142,7 @@ export class ListPersonsComponent implements OnInit {
     let ref = this.dialogService.open(DialogAddPerson, { 
         header: 'Ajouter un résident',
         width: '30%',
-        height: '60%',
+        breakpoints: { '1024px': '70vw', '768px': '90vw' },
         data: {
         }
     });
