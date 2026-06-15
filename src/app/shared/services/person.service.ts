@@ -170,8 +170,9 @@ export class PersonService {
         this.chartData_S.set(personForChart);
     }
 
-    updatePerson(person: IPersonUI): void {
-        this.PersonRepository.updatePerson(person);
+
+    updateOnePerson(person: IPersonUI): void {
+        this.PersonRepository.saveOnePerson(person);
         this.messageService.add({ severity: 'success', summary: 'Succès', detail: 'Résident mis à jour' });
     }
 

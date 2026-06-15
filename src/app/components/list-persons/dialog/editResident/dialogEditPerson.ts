@@ -52,7 +52,8 @@ export class DialogEditPerson implements OnInit {
         //disable pour eviter les flash de l'interface qui montre que le dialog est encore ouvert alors qu'on est en train de le fermer
         this.personToEditForm.disable({ emitEvent: false });
 
-        let personToEdit = {...this.personToEditForm.value, id: this.personToEdit.id}; // on ajoute l'id de la personne à éditer pour pouvoir la mettre à jour dans la base de données
+        //merge des deux objets pour ne pas perdre les propriétés qui ne sont pas dans le formulaire (comme les poids)
+        let personToEdit = { ...this.personToEdit, ...this.personToEditForm.value };
 
         if(save && isFormValid) {
             this.ref.close(personToEdit);

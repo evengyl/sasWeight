@@ -123,9 +123,8 @@ export class ListPersonsComponent implements OnInit {
 
     ref.onClose.pipe(take(1)).subscribe((personToEdit) => {
       if (personToEdit) {
-        console.log("person to edit in component after dialog closed : ", personToEdit);
         setTimeout(() => {
-          this.personService.updatePerson(personToEdit);
+          this.personService.updateOnePerson(personToEdit);
         }, 200);
       }
     })
@@ -162,16 +161,16 @@ export class ListPersonsComponent implements OnInit {
             return weightEntry;
           })
 
-          this.personService.updatePerson(person);
+          this.personService.updateOnePerson(person);
         }
         else{ //sinon on ajoute un nouveau poids pour le mois en cours
           person.listWeight = [...person.listWeight, { date: dateForSave, weight: newWeight }];
-          this.personService.updatePerson(person);
+          this.personService.updateOnePerson(person);
         }
       }
       else if(newWeight === 0){ //encoder à 0 surement donc on retire cette ligne de poids
           person.listWeight = person.listWeight.filter((weight) => weight.date !== dateForSave);
-          this.personService.updatePerson(person);
+          this.personService.updateOnePerson(person);
       }
     })
   }

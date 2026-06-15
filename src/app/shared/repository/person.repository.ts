@@ -61,6 +61,14 @@ export class PersonRepository extends dbFirebase{
         }
     }
 
+    async saveOnePerson(person: IPersonUI): Promise<void> {
+        //save de une seul personne dans firestore et pas de tous le monde pour éviter les problèmes de concurrence si plusieurs personnes sont modifiées en même temps
+        const batch = this.createBatch();
+        const ref = person.id ? this.getById(person.id) : this.generateId_docref();
+        batch.set(ref, PersonMapper.mapper_personUI_personFirestore(person));
+        await batch.commit();
+    }
+
 
 
     async saveListPerson() {
