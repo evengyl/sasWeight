@@ -51,7 +51,7 @@ export class PersonService {
     }
 
 
-    fillDataForTemplate(person: IPersonFirestore): IPersonUI {
+    private fillDataForTemplate(person: IPersonFirestore): IPersonUI {
 
         let personUI: IPersonUI = { ...person }; // copie pour ne pas modifier l'original
 
@@ -85,11 +85,20 @@ export class PersonService {
         }
         else personUI.listWeightForTemplate = new Map<number, any[]>();
 
+        //remplir le champ lastWeight pour l'affichage dans la table
+        if (person.listWeight.length > 0) {
+            let lastWeightEntry = person.listWeight.reduce((latest, entry) => {
+                return new Date(entry.date) > new Date(latest.date) ? entry : latest;
+            }
+            );
+            personUI.lastWeight = lastWeightEntry;
+        }   
+
         return personUI;
     }
 
 
-    compareWeightForAlert(person: IPersonUI): IPersonUI {
+    private compareWeightForAlert(person: IPersonUI): IPersonUI {
 
         if (person.listWeightForTemplate.size > 0) {
             person.listWeightForTemplate.forEach((events, year) => {
