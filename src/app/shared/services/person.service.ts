@@ -171,11 +171,7 @@ export class PersonService {
     }
 
     updatePerson(person: IPersonUI): void {
-        let index = this.listPerson_S().findIndex(p => p.id === person.id);
-        let listPersonCopy = [...this.listPerson_S()];
-        listPersonCopy[index] = person;
-        this.listPerson_S.set(listPersonCopy);
-        this.PersonRepository.saveListPerson();
+        this.PersonRepository.updatePerson(person);
         this.messageService.add({ severity: 'success', summary: 'Succès', detail: 'Résident mis à jour' });
     }
 

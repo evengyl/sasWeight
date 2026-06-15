@@ -50,12 +50,23 @@ export class PersonRepository extends dbFirebase{
         return await this.deleteById(id)
     }
 
+    async updatePerson(person: IPersonUI): Promise<void> {
+        const index = this.listPerson_S().findIndex(p => p.id === person.id);
+        if (index !== -1) {
+            const listPersonCopy = [...this.listPerson_S()];
+            listPersonCopy[index] = PersonMapper.mapper_personUI_personFirestore(person);
+            console.log("person to update in repo : ", listPersonCopy[index]);
+            this.listPerson_S.set(listPersonCopy);
+            await this.saveListPerson();
+        }
+    }
+
+
 
     async saveListPerson() {
         //copie car writeBatch ne supporte pas les objets avec des propriétés en lecture seule comme les signaux et les maps
         let listPersonCopy = [...this.listPerson_S().map(p => PersonMapper.mapper_personUI_personFirestore(p))];
         const batch = this.createBatch();
-
         listPersonCopy.forEach(person => {
             const ref = person.id ? this.getById(person.id) : this.generateId_docref(); // génère un id si absent
             batch.set(ref, person);

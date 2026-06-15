@@ -1,4 +1,4 @@
-<div class="bg-surface-50 dark:bg-surface-950 px-6 py-20 md:px-0 lg:px-20 pt-0">
+<div class="bg-surface-50 dark:bg-surface-950 px-6 py-20 md:px-0 lg:px-20 pt-0 text-sm">
 
 <form [formGroup]="personToEditForm">
     <div class="card flex flex-col">
@@ -11,10 +11,8 @@
             [size]="'small'"
             #dt2
             [globalFilterFields]="['name', 'surname', 'chambreNumber', 'aileName']"
-            editMode="row"
             [tableStyle]="{ 'min-width': '100%' }"
             dataKey="id"
-            [expandedRowKeys]="expandedRows"
         >
             <ng-template #caption>
                 <div class="flex">
@@ -70,119 +68,31 @@
 
             <ng-template #body let-person let-editing="editing" let-expanded="expanded" let-ri="rowIndex">
                 
-                <tr [pEditableRow]="person" [style.background-color]="getRowBgColor(person)">
+                <tr [style.background-color]="getRowBgColor(person)">
                     <td>
                         <p-button type="button" pRipple [pRowToggler]="person" [text]="true" severity="secondary"  [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'" />
                     </td>
                     <td>
-                        <p-cellEditor>
-                            <ng-template #input>
-                                <input 
-                                    title="name" 
-                                    pInputText 
-                                    type="text" 
-                                    formControlName="name" 
-                                />
-                            </ng-template>
-                            <ng-template #output>
-                                {{ person.name }}
-                            </ng-template>
-                        </p-cellEditor>
+                        {{ person.name }}
                     </td>
                     <td>
-                        <p-cellEditor>
-                            <ng-template #input>
-                                <input 
-                                    title="surname" 
-                                    pInputText 
-                                    type="text" 
-                                    formControlName="surname" 
-                                />
-                            </ng-template>
-                            <ng-template #output>
-                                {{ person.surname }}
-                            </ng-template>
-                        </p-cellEditor>
+                        {{ person.surname }}
                     </td>
                     <td>
-                        <p-cellEditor>
-                            <ng-template #input>
-                                <input 
-                                    title="chambreNumber" 
-                                    pInputText 
-                                    type="text" 
-                                    formControlName="chambreNumber"
-                                />
-                            </ng-template>
-                            <ng-template #output>
-                                {{ person.chambreNumber }}
-                            </ng-template>
-                        </p-cellEditor>
+                        {{ person.chambreNumber }}
                     </td>
                     <td>
-                        <p-cellEditor>
-                            <ng-template #input>
-                                <p-select
-                                    id="aile_name"
-                                    size="small" class="w-full" variant="filled"
-                                    [options]="listAiles"
-                                    optionLabel="label"
-                                    optionValue="label"
-                                    formControlName="aileName"
-                                    placeholder="Sélectionner une aile"
-                                    data-testid="select-aile-name"
-                                />
-                            </ng-template>
-                            <ng-template #output>
-                                {{ person.aileName }}
-                            </ng-template>
-                        </p-cellEditor>
+                        {{ person.aileName }}
                     </td>
                     <td>
-                        <div class="flex items-center justify-center gap-2">
+                        <div [ngClass]="editing ? 'flex-col' : 'flex-row'" class="flex items-center justify-center gap-1">
                             <p-button 
                                 title="Editer" 
                                 *ngIf="!editing && !editOnlyOneRow" 
                                 icon="pi pi-pencil"
-                                (click)="onRowEditInit(person)" 
+                                (click)="editPerson(person)" 
                                 label="Editer" 
-                                pInitEditableRow
                                 severity="danger"
-                                (keydown.enter)="null"
-                                size="small" 
-                            />
-
-                            <p-button 
-                                title="Valider" 
-                                *ngIf="editing" 
-                                pSaveEditableRow 
-                                icon="pi pi-check" 
-                                (click)="onRowEditSave()" 
-                                label="Valider" 
-                                severity="success"
-                                (keydown.enter)="null"
-                                size="small" 
-                            />
-
-                            <p-button 
-                                title="Annuler" 
-                                *ngIf="editing" 
-                                pCancelEditableRow 
-                                icon="pi pi-times" 
-                                (click)="onRowEditCancel()" 
-                                label="Annuler" 
-                                severity="help"
-                                (keydown.enter)="null"
-                                size="small" 
-                            />
-
-                            <p-button 
-                                title="Supprimer"
-                                *ngIf="editing" 
-                                icon="pi pi-trash" 
-                                (click)="deletePerson(person.id)" 
-                                label="Supprimer" 
-                                severity="danger" 
                                 (keydown.enter)="null"
                                 size="small" 
                             />

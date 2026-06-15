@@ -19,6 +19,7 @@ import { DialogAddPerson } from './components/list-persons/dialog/addResident/di
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { provideAuth, getAuth } from '@angular/fire/auth';
 import { LoginComponent } from './shared/core/auth/login/login.component';
+import { DialogEditPerson } from './components/list-persons/dialog/editResident/dialogEditPerson';
 
 registerLocaleData(localeFr, 'fr-FR');
 
@@ -47,7 +48,8 @@ const app = initializeApp(firebaseConfig);
     DialogAddWeight,
     DialogAddPerson,
     DashboardComponent,
-    LoginComponent
+    LoginComponent,
+    DialogEditPerson
   ],
   imports: [
     //primeNG modules

@@ -1,0 +1,63 @@
+import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { AileRepository } from '../../../../shared/repository/aile.repository';
+import { PersonFormFactory } from '../../../../shared/helper/formFactory/person';
+import { IAile } from '../../../../shared/models/aile';
+
+
+@Component({
+    standalone: false,
+    templateUrl: './dialogEditPerson.html',
+        changeDetection: ChangeDetectionStrategy.OnPush,  // ← ajouter ici
+})
+export class DialogEditPerson implements OnInit {
+
+    private readonly ref = inject(DynamicDialogRef);
+    private readonly config = inject(DynamicDialogConfig);
+
+    personToEditForm = PersonFormFactory.createPersonToAddForm()
+    listAiles : IAile[] = null
+
+    // pour éviter les flash de l'interface qui montre que le dialog est encore ouvert alors qu'on est en train de le fermer
+    isClosing = false;
+
+
+     stateOptions: { label: string; value: string }[] = [];
+    value: string = 'one-way';
+
+    personToEdit: any;
+
+    constructor() {
+        this.personToEdit = this.config.data.personToEdit;
+        this.listAiles = new AileRepository().get();
+        this.stateOptions = this.listAiles.map(aile => ({ label: aile.label, value: aile.label }));
+    }
+
+    ngOnInit() {
+        this.personToEditForm.reset();  // au cas où l'instance serait réutilisée
+        // pré-remplir le formulaire avec les données de la personne à éditer
+        if(this.personToEdit) {
+            this.personToEditForm.patchValue({
+                name: this.personToEdit.name,
+                surname: this.personToEdit.surname,
+                chambreNumber : this.personToEdit.chambreNumber,
+                aileName: this.personToEdit.aileName,
+            });
+        }
+    }
+
+    closeDialog(save: boolean) {
+        this.isClosing = true;
+        let isFormValid = this.personToEditForm.valid;
+        //disable pour eviter les flash de l'interface qui montre que le dialog est encore ouvert alors qu'on est en train de le fermer
+        this.personToEditForm.disable({ emitEvent: false });
+
+        let personToEdit = {...this.personToEditForm.value, id: this.personToEdit.id}; // on ajoute l'id de la personne à éditer pour pouvoir la mettre à jour dans la base de données
+
+        if(save && isFormValid) {
+            this.ref.close(personToEdit);
+        } else {
+            this.ref.close();
+        }
+    }
+}

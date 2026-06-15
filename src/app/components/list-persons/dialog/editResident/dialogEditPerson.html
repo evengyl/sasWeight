@@ -1,0 +1,75 @@
+<div class="flex flex-col gap-6 h-full">
+
+    <!-- Saisie nouveau poids -->
+    <div class="flex flex-col gap-2">
+        @if(!isClosing) {
+        <form [formGroup]="personToEditForm">
+
+            <div class="flex flex-col gap-2">
+
+
+                <p-divider /> 
+                <input
+                    pSize="small"
+                    type="text"
+                    variant="filled"
+                    pInputText
+                    placeholder="Prénom du résident"
+                    formControlName="name"
+                    class="w-full"
+                    data-testid="input-nom"
+                    [invalid]="personToEditForm.controls['name'].invalid && personToEditForm.controls['name'].touched"
+                />
+
+                <input
+                    pSize="small"
+                    type="text"
+                    variant="filled"
+                    pInputText
+                    placeholder="Nom de famille du résident"
+                    formControlName="surname"
+                    class="w-full"
+                    data-testid="input-surname"
+                    [invalid]="personToEditForm.controls['surname'].invalid && personToEditForm.controls['surname'].touched"
+                />
+
+                <input
+                    pSize="small"
+                    type="text"
+                    variant="filled"
+                    pInputText
+                    placeholder="Numéro de chambre du résident"
+                    formControlName="chambreNumber"
+                    class="w-full"
+                    data-testid="input-chambreNumber"
+                    [invalid]="personToEditForm.controls['chambreNumber'].invalid && personToEditForm.controls['chambreNumber'].touched"
+                />
+                @if (personToEditForm.controls['chambreNumber'].invalid && personToEditForm.controls['chambreNumber'].touched) {
+                    <p-message severity="error" size="small" variant="simple">Format accepté 0.00x et -1.00x</p-message>
+                }
+                
+                <p-selectbutton 
+                    [options]="stateOptions" 
+                    formControlName="aileName" 
+                    optionLabel="label" 
+                    optionValue="value" 
+                    styleClass="styleClass"
+                />
+
+               <p-divider />
+
+                @if (personToEditForm.invalid && personToEditForm.touched) {
+                    <p-message severity="error" size="small" variant="simple">Formulaire mal rempli.</p-message>
+                }
+            </div>
+        </form>
+        }
+    </div>
+
+    <!-- Actions -->
+    <div class="flex justify-end gap-2 pt-2">
+        <p-button label="Annuler" severity="secondary" [outlined]="true" (onClick)="closeDialog(null)" />
+        <p-button label="Enregistrer" icon="pi pi-check" (onClick)="closeDialog(true)" />
+    </div>
+
+</div>

@@ -10,6 +10,7 @@ import { IPersonUI } from '../../shared/models/person';
 import { IAile } from '../../shared/models/aile';
 import { PersonFormFactory } from '../../shared/helper/formFactory/person';
 import { listMonthsWithNumber } from '../../shared/utils/others';
+import { DialogEditPerson } from './dialog/editResident/dialogEditPerson';
 
 
 @Component({
@@ -53,54 +54,6 @@ export class ListPersonsComponent implements OnInit {
     {
       this.personService.initListPerson()
     }
-
-    toggleRow(person: IPersonUI): void {
-
-      if (this.expandedRows[person.id]) 
-          delete this.expandedRows[person.id];
-      else 
-          this.expandedRows[person.id] = true;
-      
-      this.expandedRows = { ...this.expandedRows };
-    }
-
-    onRowEditInit(person: IPersonUI)
-    {
-      //on autorise l'édition d'une seule ligne à la fois pour éviter les problèmes 
-      // de formulaire réactif qui se mélange entre les différentes 
-      // lignes si on en édite plusieurs en même temps
-      this.editOnlyOneRow = true
-      
-      this.personToEditId = person.id
-      this.personToEditForm.reset();  // au cas où l'instance serait réutilisée
-      this.personToEditForm.patchValue({
-        name: person.name,
-        surname: person.surname,
-        chambreNumber: person.chambreNumber,
-        aileName: this.listAiles.find(aile => aile.label === person.aileName)?.label || ''
-      })
-    }
-
-    onRowEditSave()
-    {
-      let personToUpdate = this.personToEditForm.value;
-      personToUpdate.id = this.personToEditId;
-      this.personService.updatePerson(personToUpdate);
-      //on autorise l'édition d'une seule ligne à la fois pour éviter les problèmes 
-      // de formulaire réactif qui se mélange entre les différentes 
-      // lignes si on en édite plusieurs en même temps
-      this.editOnlyOneRow = false
-    }
-
-
-    onRowEditCancel() {
-      //on autorise l'édition d'une seule ligne à la fois pour éviter les problèmes 
-      // de formulaire réactif qui se mélange entre les différentes 
-      // lignes si on en édite plusieurs en même temps
-      this.editOnlyOneRow = false
-    }
-
-
 
   deletePerson(id: string) {
     this.confirmationService.confirm({
@@ -151,6 +104,28 @@ export class ListPersonsComponent implements OnInit {
       if (personToAdd) {
         setTimeout(() => {
           this.personService.addPerson(personToAdd);
+        }, 200);
+      }
+    })
+  }
+
+
+  editPerson(personToEdit)
+  {
+    let ref = this.dialogService.open(DialogEditPerson, { 
+        header: 'Modifier un résident',
+        width: '30%',
+        breakpoints: { '1024px': '70vw', '768px': '90vw' },
+        data: {
+          personToEdit: personToEdit
+        }
+    });
+
+    ref.onClose.pipe(take(1)).subscribe((personToEdit) => {
+      if (personToEdit) {
+        console.log("person to edit in component after dialog closed : ", personToEdit);
+        setTimeout(() => {
+          this.personService.updatePerson(personToEdit);
         }, 200);
       }
     })
