@@ -166,6 +166,7 @@ export class PersonService {
                 if (entry.weight !== '/') {
                     lastKnownWeight = Number.parseFloat(entry.weight);
                 }
+                else lastKnownWeight = null; // ou garder la dernière valeur connue, selon ce que vous préférez
                 return lastKnownWeight;
             });
 

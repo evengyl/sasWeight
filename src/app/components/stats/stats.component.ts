@@ -56,6 +56,16 @@ export class StatsComponent implements OnInit {
         }
 
         this.dataChart = datasetsPerAilename
+
+
+        //partie pour calculer les valeurs min et max du graphique pour que l'échelle s'adapte automatiquement aux données, avec une marge de 10 kg de chaque côté
+        let maxWeight = 0;
+        let minWeight = 0;
+
+        let allWeights = [...datasetsGlobal.map(d => d.data).flat()].filter(x => x !== null) as number[]; // filtrer les valeurs nulles ou indéfinies
+
+        maxWeight = Math.ceil(Math.max(...allWeights)) + 10; // ajouter une marge de 10 kg
+        minWeight = Math.floor(Math.min(...allWeights)) - 10; // ajouter une marge de 10 kg
     
         this.optionsChart = {
           maintainAspectRatio: false,
@@ -85,8 +95,8 @@ export class StatsComponent implements OnInit {
                       color: surfaceBorder,
                       drawBorder: false
                   },
-                  min:30,
-                  max:180
+                  min: minWeight,
+                  max: maxWeight
               }
           }
         };
