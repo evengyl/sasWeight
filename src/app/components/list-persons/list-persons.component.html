@@ -1,6 +1,5 @@
 <div class="bg-surface-50 dark:bg-surface-950 px-6 py-20 md:px-0 lg:px-20 pt-0 text-sm">
 
-<form [formGroup]="personToEditForm">
     <div class="card flex flex-col">
         <p-toast />
         <p-table 
@@ -37,7 +36,11 @@
 
             <ng-template #header>
                 <tr>
-                    <th scope="col" style="width: 5%"></th>
+                    <th scope="col" style="width: 15%">
+                        <div class="flex items-center gap-2">
+                            Gestion des poids (cliquer pour dérouler)
+                        </div>
+                    </th>
                     <th scope="col" pSortableColumn="name">
                         <div class="flex items-center gap-2">
                             Nom
@@ -88,7 +91,7 @@
                         <div [ngClass]="editing ? 'flex-col' : 'flex-row'" class="flex items-center justify-center gap-1">
                             <p-button 
                                 title="Editer" 
-                                *ngIf="!editing && !editOnlyOneRow" 
+                                *ngIf="!editing" 
                                 icon="pi pi-pencil"
                                 (click)="editPerson(person)" 
                                 label="Editer" 
@@ -108,7 +111,7 @@
                     <td colspan="6">
                     
                         <div class="card flex items-center gap-2 flex-wrap">
-                            <div class="mb-4 p-8">
+                            <div class="mb-1 p-1">
                                 @for(mapperWeight of person.listWeightForTemplate; track mapperWeight[0])
                                 {
                                     <p-card header="Année {{mapperWeight[0]}}" class="card mb-4">
@@ -136,9 +139,8 @@
             </ng-template>
         </p-table>
     </div>
-</form>
 </div>
 
 <p-confirmdialog />
 
-<p-button (click)="deleteAllAndRefill()" label="Supprimer tout et remplir" severity="danger" />
+<!-- <p-button (click)="deleteAllAndRefill()" label="Supprimer tout et remplir" severity="danger" /> -->
