@@ -8,11 +8,9 @@
         </div>
         <div class="flex items-center gap-2 text-muted-color">
             <i class="pi pi-calendar"></i>
-            <span>{{ monthWeighted.monthStr }} {{ year }}</span>
+            <span>Ajouter pour : {{ monthWeighted }} {{ year }}</span>
         </div>
     </div>
-
-    <p-divider />
 
     <!-- Valeur actuelle -->
     <div class="flex items-center justify-between px-2">
@@ -36,7 +34,7 @@
 
     <!-- Actions -->
     <div class="flex justify-end gap-2 pt-2">
-        <p-button label="Annuler" severity="secondary" [outlined]="true" (onClick)="closeDialog(null)" />
+        <p-button label="Annuler" icon="pi pi-times" severity="secondary" [outlined]="true" (onClick)="closeDialog(null)" />
         <p-button label="Enregistrer" icon="pi pi-check" (onClick)="closeDialog(newWeight)" />
     </div>
 

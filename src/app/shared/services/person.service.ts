@@ -172,13 +172,13 @@ export class PersonService {
 
 
     updateOnePerson(person: IPersonUI): void {
-        this.PersonRepository.saveOnePerson(person);
+        this.PersonRepository.updateOnePerson(person);
         this.messageService.add({ severity: 'success', summary: 'Succès', detail: 'Résident mis à jour' });
     }
 
 
     addPerson(person: IPersonUI): void {
-        this.PersonRepository.addPerson(person);
+        this.PersonRepository.addOnePerson(person);
         this.messageService.add({ severity: 'success', summary: 'Succès', detail: 'Résident ajouté' });
     }
 

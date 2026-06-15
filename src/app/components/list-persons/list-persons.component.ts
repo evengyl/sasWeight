@@ -23,28 +23,15 @@ import { DialogEditPerson } from './dialog/editResident/dialogEditPerson';
 export class ListPersonsComponent implements OnInit {
 
     private readonly personService = inject(PersonService);
-    private readonly messageService = inject(MessageService);
     private readonly dialogService = inject(DialogService);
-    private readonly confirmationService = inject(ConfirmationService);
     private readonly aileRepository = inject(AileRepository);
 
 
     readonly personList = this.personService.listPerson_S;
     readonly loadingData = this.personService.loadingData;
 
-    statuses!: SelectItem[];
-
-
-    //perlet de cloner la person qui est en train d'être édité pour pouvoir annuler les modifications si besoin
-    clonedPerson: { [s: string]: IPersonUI } = {};
-    expandedRows: { [key: string]: boolean } = {};
-
-
     listAiles : IAile[] = null;
 
-    personToEditForm = PersonFormFactory.createPersonToAddForm()
-    editOnlyOneRow : boolean = false;
-    personToEditId!: string;
 
     constructor() {
       this.listAiles = this.aileRepository.get();
@@ -54,36 +41,6 @@ export class ListPersonsComponent implements OnInit {
     {
       this.personService.initListPerson()
     }
-
-  deletePerson(id: string) {
-    this.confirmationService.confirm({
-      target: event.target as EventTarget,
-      message: 'Voulez-vous supprimer ce résident ?',
-      header: 'Zone de danger',
-      icon: 'pi pi-info-circle',
-      rejectLabel: 'Annuler',
-      rejectButtonProps: {
-          label: 'Annuler',
-          severity: 'secondary',
-          outlined: true
-      },
-      acceptButtonProps: {
-          label: 'Supprimer',
-          severity: 'danger'
-      },
-  
-      accept: () => {
-          this.personService.deletePerson(id);
-          this.editOnlyOneRow = false
-      },
-      reject: () => {
-          this.messageService.add({ severity: 'error', summary: 'Annulé', detail: 'Vous avez annulé' });
-      }
-    });
-
-  }
-
-
 
 
   deleteAllAndRefill(){

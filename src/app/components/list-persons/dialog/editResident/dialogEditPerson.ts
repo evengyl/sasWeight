@@ -3,6 +3,8 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { AileRepository } from '../../../../shared/repository/aile.repository';
 import { PersonFormFactory } from '../../../../shared/helper/formFactory/person';
 import { IAile } from '../../../../shared/models/aile';
+import { PersonService } from '../../../../shared/services/person.service';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 
 @Component({
@@ -14,7 +16,11 @@ export class DialogEditPerson implements OnInit {
 
     private readonly ref = inject(DynamicDialogRef);
     private readonly config = inject(DynamicDialogConfig);
+    private readonly personService = inject(PersonService);
+    private readonly confirmationService = inject(ConfirmationService);
+    private readonly messageService = inject(MessageService);
 
+    
     personToEditForm = PersonFormFactory.createPersonToAddForm()
     listAiles : IAile[] = null
 
@@ -60,5 +66,33 @@ export class DialogEditPerson implements OnInit {
         } else {
             this.ref.close();
         }
+    }
+
+    deleteDialog(person: any) {
+        // Implémentez la logique de suppression ici
+        this.confirmationService.confirm({
+            target: event.target as EventTarget,
+            message: 'Voulez-vous supprimer ce résident ?',
+            header: 'Zone de danger',
+            icon: 'pi pi-info-circle',
+            rejectLabel: 'Annuler',
+            rejectButtonProps: {
+                label: 'Annuler',
+                severity: 'secondary',
+                outlined: true
+            },
+            acceptButtonProps: {
+                label: 'Supprimer',
+                severity: 'danger'
+            },
+        
+            accept: () => {
+                this.personService.deletePerson(person.id);
+                this.ref.close();
+            },
+            reject: () => {
+                this.messageService.add({ severity: 'error', summary: 'Annulé', detail: 'Vous avez annulé' });
+            }
+        });
     }
 }

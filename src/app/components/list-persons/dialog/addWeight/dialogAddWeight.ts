@@ -5,9 +5,7 @@ import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dy
     standalone: false,
     templateUrl: './dialogAddWeight.html',
 })
-export class DialogAddWeight implements OnInit {
-
-    private readonly dialogService = inject(DialogService);
+export class DialogAddWeight {
     private readonly config = inject(DynamicDialogConfig);
 
     private readonly ref = inject(DynamicDialogRef);
@@ -16,21 +14,9 @@ export class DialogAddWeight implements OnInit {
     person : any = this.config.data.person;
     monthWeighted : any = this.config.data.monthWeighted;
     year : any = this.config.data.year;
-
-
-    //form
     newWeight : number = 0;
-
-    ngOnInit() {
-    }
-
-
 
     closeDialog(data) {
         this.ref.close(data);
     }
-
-
-    
-
 }
