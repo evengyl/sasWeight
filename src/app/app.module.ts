@@ -16,8 +16,9 @@ import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { DialogAddWeight } from './components/list-persons/dialog/addWeight/dialogAddWeight';
 import { DialogAddPerson } from './components/list-persons/dialog/addResident/dialogAddPerson';
-
-
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { provideAuth, getAuth } from '@angular/fire/auth';
+import { LoginComponent } from './shared/core/auth/login/login.component';
 
 registerLocaleData(localeFr, 'fr-FR');
 
@@ -44,7 +45,9 @@ const app = initializeApp(firebaseConfig);
     HeaderComponent,
     ListPersonsComponent,
     DialogAddWeight,
-    DialogAddPerson
+    DialogAddPerson,
+    DashboardComponent,
+    LoginComponent
   ],
   imports: [
     //primeNG modules
@@ -62,6 +65,7 @@ const app = initializeApp(firebaseConfig);
     { provide: LOCALE_ID, useValue: 'fr-FR' },
     provideFirebaseApp(() => initializeApp(firebaseConfig)),
     provideFirestore(() => getFirestore()),
+    provideAuth(() => getAuth()),
   ],
   bootstrap: [AppComponent],
 })

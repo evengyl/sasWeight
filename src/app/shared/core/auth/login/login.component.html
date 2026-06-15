@@ -1,0 +1,51 @@
+@if(isUserConnected){
+    <div class="bg-surface-50 dark:bg-surface-950 px-6 py-20 md:px-20 lg:px-80">
+        <div
+            class="bg-surface-0 dark:bg-surface-900 p-8 md:p-12 shadow-sm rounded-2xl w-full max-w-sm mx-auto flex flex-col gap-8">
+            <div class="flex flex-col items-center gap-4">
+                <div class="flex flex-col items-center gap-2 w-full">
+                    <div class="text-surface-900 dark:text-surface-0 text-2xl font-semibold leading-tight text-center w-full">
+                        Vous êtes déjà connecté.
+                    </div>
+                </div>
+            </div>
+            <button (click)="logout()" [disabled]="loading" pButton class="w-full py-2 rounded-lg flex justify-center items-center gap-2">
+                <i pButtonIcon class="pi pi-user text-base! leading-normal!"></i>
+                <span pButtonLabel>Se déconnecter</span>
+            </button>
+        </div>
+    </div>
+}
+@else {
+    <form [formGroup]="form" (ngSubmit)="submit()">
+
+        <div class="bg-surface-50 dark:bg-surface-950 px-6 py-20 md:px-20 lg:px-80">
+            <div
+                class="bg-surface-0 dark:bg-surface-900 p-8 md:p-12 shadow-sm rounded-2xl w-full max-w-sm mx-auto flex flex-col gap-8">
+                <div class="flex flex-col items-center gap-4">
+                    <div class="flex flex-col items-center gap-2 w-full">
+                        <div class="text-surface-900 dark:text-surface-0 text-2xl font-semibold leading-tight text-center w-full">
+                            Connexion</div>
+                        <div class="text-center w-full">
+                            <span class="text-surface-700 dark:text-surface-200 leading-normal">Un compte vous à été fourni par l'une des infirmières en cheffe</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex flex-col gap-6 w-full">
+                    <div class="flex flex-col gap-2 w-full">
+                        <label for="email1" class="text-surface-900 dark:text-surface-0 font-medium leading-normal">Email</label>
+                        <input pInputText id="email1" type="email" formControlName="email" placeholder="Email" class="w-full px-3 py-2 shadow-sm rounded-lg" />
+                    </div>
+                    <div class="flex flex-col gap-2 w-full">
+                        <label for="password1" class="text-surface-900 dark:text-surface-0 font-medium leading-normal">Mot de passe</label>
+                        <input pInputText id="password1" type="password" formControlName="password" placeholder="Mot de passe" class="w-full px-3 py-2 shadow-sm rounded-lg" />
+                    </div>
+                </div>
+                <button [disabled]="loading" pButton class="w-full py-2 rounded-lg flex justify-center items-center gap-2">
+                    <i pButtonIcon class="pi pi-user text-base! leading-normal!"></i>
+                    <span pButtonLabel>{{ loading ? 'Connexion...' : 'Se connecter' }}</span>
+                </button>
+            </div>
+        </div>
+    </form>
+}
