@@ -9,7 +9,6 @@ import { environment } from '../environments/environment';
 import { PrimeExportModule } from './shared/primeModuleExport.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { StatsComponent } from './components/stats/stats.component';
 import { HeaderComponent } from './components/header/header.component';
 import { ListPersonsComponent } from './components/list-persons/list-persons.component';
 import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
@@ -20,6 +19,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { provideAuth, getAuth } from '@angular/fire/auth';
 import { LoginComponent } from './shared/core/auth/login/login.component';
 import { DialogEditPerson } from './components/list-persons/dialog/editResident/dialogEditPerson';
+import { DateFrPipe } from './shared/helper/dateFr.pipe';
 
 registerLocaleData(localeFr, 'fr-FR');
 
@@ -42,14 +42,14 @@ const app = initializeApp(firebaseConfig);
 @NgModule({
   declarations: [
     AppComponent,
-    StatsComponent,
     HeaderComponent,
     ListPersonsComponent,
     DialogAddWeight,
     DialogAddPerson,
     DashboardComponent,
     LoginComponent,
-    DialogEditPerson
+    DialogEditPerson,
+    DateFrPipe
   ],
   imports: [
     //primeNG modules

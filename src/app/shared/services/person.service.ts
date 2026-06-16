@@ -1,7 +1,7 @@
 import { effect, inject, Injectable, signal, WritableSignal } from "@angular/core";
 import { MessageService } from "primeng/api";
 import { IPersonFirestore, IPersonUI } from "../models/person";
-import { listMonths } from "../utils/others";
+import { listMonthsWithNumber } from "../utils/others";
 import { PersonRepository } from "../repository/person.repository";
 
 @Injectable({
@@ -17,19 +17,12 @@ export class PersonService {
 
     listPerson_S: WritableSignal<IPersonUI[]> = signal<IPersonUI[]>([]);
     loadingData = signal(true);
-    chartData_S: WritableSignal<any> = signal<any>([]);
 
 
-    private readonly listMonths = listMonths;
+    private readonly listMonthsObj = listMonthsWithNumber;
 
     constructor() {
         this.listPerson_S = this.PersonRepository.listPerson_S;
-
-        effect(() => {
-            if(this.listPerson_S().length > 0) {
-                this.prepareChartData();
-            }
-        })
     }
 
     async initListPerson() {
@@ -62,7 +55,7 @@ export class PersonService {
         for (let year = currentYear; year <= currentYear + 1; year++) {
 
             for (let month = 1; month <= 12; month++) {
-                let monthStr = this.listMonths[month - 1];
+                let monthStr = this.listMonthsObj.find(m => m.id === month)?.name || '';
 
                 //recupérer un poid si une date correspond au mois et à l'année en cours
                 let weightIncludedInMonth = person.listWeight.find(w => {
@@ -152,32 +145,6 @@ export class PersonService {
         }
 
         return person
-    }
-
-
-    prepareChartData() {
-        const currentYear = new Date().getFullYear();
-
-        const personForChart = this.listPerson_S().map((person: IPersonUI) => {
-            const monthlyData = person.listWeightForTemplate?.get(currentYear) ?? [];
-
-            let lastKnownWeight: number | null = null;
-            const data = monthlyData.map(entry => {
-                if (entry.weight !== '/') {
-                    lastKnownWeight = Number.parseFloat(entry.weight);
-                }
-                else lastKnownWeight = null; // ou garder la dernière valeur connue, selon ce que vous préférez
-                return lastKnownWeight;
-            });
-
-            return {
-                label: `${person.name} ${person.surname}`,
-                aileName: person.aileName,
-                data: data
-            };
-        });
-
-        this.chartData_S.set(personForChart);
     }
 
 
