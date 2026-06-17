@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, effect, inject, Signal } from '@angular/core';
 import { PrimeExportModule } from '../../shared/primeModuleExport.module';
 import { SharedExportModule } from '../../shared/sharedExport.module';
 import { AuthService } from '../../shared/core/auth/auth.service';
@@ -11,13 +11,9 @@ import { AuthService } from '../../shared/core/auth/auth.service';
 export class FooterComponent {
   private readonly auth: AuthService = inject(AuthService);
 
-  state : boolean = false;
+  authState : Signal<boolean> = this.auth.state_S;
 
-  constructor() { 
-    this.auth.user$.subscribe((user) => {
-      if (user) this.state = true;
-      else this.state = false;
-    })
+  constructor() {
   }
 
   logout(){

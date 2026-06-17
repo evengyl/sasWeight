@@ -1,38 +1,38 @@
-import { Component } from "@angular/core";
+import { Component, effect, inject, Signal } from "@angular/core";
 import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from "@angular/forms";
 import { Router } from "@angular/router";
-import { AuthService } from "../auth.service";
-import { PrimeExportModule } from "../../../primeModuleExport.module";
+import { AuthService } from "../../shared/core/auth/auth.service";
+import { PrimeExportModule } from "../../shared/primeModuleExport.module";
+import { SharedExportModule } from "../../shared/sharedExport.module";
 
 @Component({
     selector: "app-login",
     templateUrl: "./login.component.html",
-    imports: [ReactiveFormsModule, PrimeExportModule],
+    imports: [PrimeExportModule, SharedExportModule],
 })
 export class LoginComponent {
+
+    private readonly auth = inject(AuthService);
+    private readonly router = inject(Router)
+    private readonly fb = inject(FormBuilder);
 
     form: FormGroup;
     error: string | null = null;
     loading = false;
 
-    isUserConnected = false;
+    authState : Signal<boolean> = this.auth.state_S;
 
-    constructor(
-        private readonly fb: FormBuilder,
-        private readonly auth: AuthService,
-        private readonly router: Router
-    ) {
+    constructor() {
         this.form = this.fb.group({
-            email: ['', [Validators.required, Validators.email]],
-            password: ['', Validators.required]
+            email: ['infi@arbredejade.be', [Validators.required, Validators.email]],
+            password: ['InfiJade__', Validators.required]
         });
 
-
-        this.auth.user$.subscribe(user => {
-            if (user)
-                this.isUserConnected = true;
-            else this.isUserConnected = false;
-        });
+        effect(() => {
+            if(this.authState()) {
+                this.router.navigate(['/']);
+            }
+        })
     }
 
 

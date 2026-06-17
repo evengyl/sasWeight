@@ -23,39 +23,38 @@ import { SharedExportModule } from '../../shared/sharedExport.module';
 })
 export class ListPersonsComponent implements OnInit {
 
-    private readonly personService = inject(PersonService);
-    private readonly dialogService = inject(DialogService);
-    private readonly aileRepository = inject(AileRepository);
+  private readonly personService = inject(PersonService);
+  private readonly dialogService = inject(DialogService);
+  private readonly aileRepository = inject(AileRepository);
 
 
-    readonly personList = this.personService.listPerson_S;
-    readonly loadingData = this.personService.loadingData;
+  readonly personList = this.personService.listPerson_S;
+  readonly loadingData = this.personService.loadingData;
 
-    listAiles : IAile[] = null;
-
-
-    constructor() {
-      this.listAiles = this.aileRepository.get();
-    }
-
-    ngOnInit()
-    {
-      this.personService.initListPerson()
-    }
+  listAiles: IAile[] = null;
 
 
-  deleteAllAndRefill(){
+  constructor() {
+    this.listAiles = this.aileRepository.get();
+  }
+
+  ngOnInit() {
+    this.personService.initListPerson()
+  }
+
+
+  deleteAllAndRefill() {
     this.personService.deleteAllAndRefill()
   }
 
 
-  addPerson(){
-    let ref = this.dialogService.open(DialogAddPerson, { 
-        header: 'Ajouter un résident',
-        width: '30%',
-        breakpoints: { '1024px': '70vw', '768px': '90vw' },
-        data: {
-        }
+  addPerson() {
+    let ref = this.dialogService.open(DialogAddPerson, {
+      header: 'Ajouter un résident',
+      width: '30%',
+      breakpoints: { '1024px': '70vw', '768px': '90vw' },
+      data: {
+      }
     });
 
     ref.onClose.pipe(take(1)).subscribe((personToAdd) => {
@@ -68,15 +67,14 @@ export class ListPersonsComponent implements OnInit {
   }
 
 
-  editPerson(personToEdit)
-  {
-    let ref = this.dialogService.open(DialogEditPerson, { 
-        header: 'Modifier un résident',
-        width: '30%',
-        breakpoints: { '1024px': '70vw', '768px': '90vw' },
-        data: {
-          personToEdit: personToEdit
-        }
+  editPerson(personToEdit) {
+    let ref = this.dialogService.open(DialogEditPerson, {
+      header: 'Modifier un résident',
+      width: '30%',
+      breakpoints: { '1024px': '70vw', '768px': '90vw' },
+      data: {
+        personToEdit: personToEdit
+      }
     });
 
     ref.onClose.pipe(take(1)).subscribe((personToEdit) => {
@@ -89,15 +87,14 @@ export class ListPersonsComponent implements OnInit {
   }
 
 
-  editMonthClicked(person, monthWeighted, year)
-  {
-    let ref = this.dialogService.open(DialogAddWeight, { 
-        header: 'Ajouter un poids',
-        data: {
-          person: person,
-          monthWeighted: monthWeighted,
-          year: year
-        }
+  editMonthClicked(person, monthWeighted, year) {
+    let ref = this.dialogService.open(DialogAddWeight, {
+      header: 'Ajouter un poids',
+      data: {
+        person: person,
+        monthWeighted: monthWeighted,
+        year: year
+      }
     });
 
     ref.onClose.pipe(take(1)).subscribe((newWeight) => {
@@ -109,11 +106,11 @@ export class ListPersonsComponent implements OnInit {
         //converti le moi en toute lettre en chiffre
 
         let ifExistWeightForMonth = person.listWeight.find((weight) => (weight.date) === dateForSave);
-        
+
         //c'est qu'on est sur le même mois et la même année que le poids ajouté, on peut donc modifier le poids du mois en cours
-        if(ifExistWeightForMonth){
+        if (ifExistWeightForMonth) {
           person.listWeight = person.listWeight.map((weightEntry) => {
-            if(weightEntry.date === ifExistWeightForMonth.date) {
+            if (weightEntry.date === ifExistWeightForMonth.date) {
               return { date: weightEntry.date, weight: newWeight };
             }
             return weightEntry;
@@ -121,41 +118,41 @@ export class ListPersonsComponent implements OnInit {
 
           this.personService.updateOnePerson(person);
         }
-        else{ //sinon on ajoute un nouveau poids pour le mois en cours
+        else { //sinon on ajoute un nouveau poids pour le mois en cours
           person.listWeight = [...person.listWeight, { date: dateForSave, weight: newWeight }];
           this.personService.updateOnePerson(person);
         }
       }
-      else if(newWeight === 0){ //encoder à 0 surement donc on retire cette ligne de poids
-          person.listWeight = person.listWeight.filter((weight) => weight.date !== dateForSave);
-          this.personService.updateOnePerson(person);
+      else if (newWeight === 0) { //encoder à 0 surement donc on retire cette ligne de poids
+        person.listWeight = person.listWeight.filter((weight) => weight.date !== dateForSave);
+        this.personService.updateOnePerson(person);
       }
     })
   }
 
-  
-  
+
+
   //NgClass
   getClassSeverity(monthWeighted: any): string {
-      if(monthWeighted.weight === "/") return "bg-gray-500 text-gray-100";
+    if (monthWeighted.weight === "/") return "bg-gray-500 text-gray-100";
 
-      else if(monthWeighted.evolveStatus?.includes("decrease")) return "bg-red-500 text-red-100";
-      else if(monthWeighted.evolveStatus?.includes("increase")) return "bg-green-500 text-green-100";
-      else return "bg-blue-500 text-blue-100";
+    else if (monthWeighted.evolveStatus?.includes("decrease")) return "bg-red-500 text-red-100";
+    else if (monthWeighted.evolveStatus?.includes("increase")) return "bg-green-500 text-green-100";
+    else return "bg-blue-500 text-blue-100";
   }
 
   getClassIcon(monthWeighted: any): string {
-      if(monthWeighted.weight === "/") return "pi-minus";
+    if (monthWeighted.weight === "/") return "pi-minus";
 
-      else if(monthWeighted.evolveStatus?.includes("decrease")) return "pi-arrow-down";
-      else if(monthWeighted.evolveStatus?.includes("increase")) return "pi-arrow-up";
-      else return "pi-minus";
+    else if (monthWeighted.evolveStatus?.includes("decrease")) return "pi-arrow-down";
+    else if (monthWeighted.evolveStatus?.includes("increase")) return "pi-arrow-up";
+    else return "pi-minus";
   }
 
-  
+
   getRowBgColor(person: IPersonUI): string {
-    if(this.aileRepository.getOneByLabel(person.aileName)?.label){
-      switch(person.aileName){
+    if (this.aileRepository.getOneByLabel(person.aileName)?.label) {
+      switch (person.aileName) {
         case "Saphir": return '#0f53ba80';
         case "Azurite": return '#3c7cb180';
         case "Améthyste": return '#9b59b680';
