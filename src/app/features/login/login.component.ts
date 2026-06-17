@@ -30,7 +30,13 @@ export class LoginComponent {
         });
 
         //si developpement, auto login
-        console.log(environment);
+        if(environment.production === false)
+        {
+            this.form.setValue({
+                email : environment.loginEmail,
+                password: environment.loginPassword
+            });
+        }
 
         effect(() => {
             if(this.authState()) {
