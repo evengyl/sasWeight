@@ -2,11 +2,12 @@ import { Component } from "@angular/core";
 import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from "@angular/forms";
 import { Router } from "@angular/router";
 import { AuthService } from "../auth.service";
+import { PrimeExportModule } from "../../../primeModuleExport.module";
 
 @Component({
     selector: "app-login",
     templateUrl: "./login.component.html",
-    imports: [ReactiveFormsModule],
+    imports: [ReactiveFormsModule, PrimeExportModule],
 })
 export class LoginComponent {
 

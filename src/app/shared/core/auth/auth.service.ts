@@ -7,6 +7,7 @@ import {
   user,
   User
 } from '@angular/fire/auth'
+import { Router } from "@angular/router";
 
 
 @Injectable({ providedIn: 'root' })
@@ -15,6 +16,8 @@ export class AuthService {
   user$: Observable<User | null>;
 
   private readonly afAuth: Auth = inject(Auth);
+  private readonly router = inject(Router); 
+  
   constructor() {
     this.user$ = user(this.afAuth);
   }
@@ -24,6 +27,7 @@ export class AuthService {
   }
 
   logout() {
-    return signOut(this.afAuth);
+    signOut(this.afAuth);
+    this.router.navigate(['/login']);
   }
 }
