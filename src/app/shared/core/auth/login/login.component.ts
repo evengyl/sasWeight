@@ -32,14 +32,8 @@ export class LoginComponent {
                 this.isUserConnected = true;
             else this.isUserConnected = false;
         });
-
-
-        
-console.log(navigator.userAgent);
-console.log(navigator.platform);
-console.log(navigator.language);
-
     }
+
 
     async submit() {
         if (this.form.invalid) return;

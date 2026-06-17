@@ -1,12 +1,8 @@
 import { NgModule } from '@angular/core';
-import { providePrimeNG } from 'primeng/config';
-import Aura from '@primeuix/themes/aura';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { ToastModule } from 'primeng/toast';
-import { ConfirmationService, MessageService } from 'primeng/api';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
-import { definePreset } from '@primeuix/themes';
 import { CardModule } from 'primeng/card';
 import { FieldsetModule } from 'primeng/fieldset';
 import { ListboxModule } from 'primeng/listbox';
@@ -34,7 +30,6 @@ import { TimelineModule } from 'primeng/timeline';
 import { StepperModule } from 'primeng/stepper';
 import { ChipModule } from 'primeng/chip';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
-import { DialogService } from 'primeng/dynamicdialog';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { SelectButtonModule } from 'primeng/selectbutton';
 
