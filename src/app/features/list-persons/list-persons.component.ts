@@ -1,24 +1,25 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { ConfirmationService, MessageService, SelectItem } from 'primeng/api';
 import { PersonService } from '../../shared/services/person.service';
-import { DialogService } from 'primeng/dynamicdialog';
+import { DialogService, DynamicDialogModule } from 'primeng/dynamicdialog';
 import { DialogAddWeight } from './dialog/addWeight/dialogAddWeight';
 import { DialogAddPerson } from './dialog/addResident/dialogAddPerson';
 import { take } from 'rxjs';
 import { AileRepository } from '../../shared/repository/aile.repository';
 import { IPersonUI } from '../../shared/models/person';
 import { IAile } from '../../shared/models/aile';
-import { PersonFormFactory } from '../../shared/helper/formFactory/person';
 import { listMonthsWithNumber } from '../../shared/utils/others';
 import { DialogEditPerson } from './dialog/editResident/dialogEditPerson';
+import { PrimeExportModule } from '../../shared/primeModuleExport.module';
+import { DateFrPipe } from '../../shared/helper/pipes/dateFr.pipe';
+import { SharedExportModule } from '../../shared/sharedExport.module';
 
 
 @Component({
   selector: 'app-list-persons',
-  standalone: false,
   templateUrl: './list-persons.component.html',
   styleUrls: ['./list-persons.component.scss'],
   //changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [SharedExportModule, PrimeExportModule, DateFrPipe]
 })
 export class ListPersonsComponent implements OnInit {
 

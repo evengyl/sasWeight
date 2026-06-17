@@ -1,6 +1,6 @@
-# IcasSso
+# SasWeightStand
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.19.
+This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.3.27.
 
 ## Development server
 
@@ -44,47 +44,15 @@ To execute unit tests with the [Karma](https://karma-runner.github.io) test runn
 ng test
 ```
 
-## Running end-to-end tests (Playwright)
+## Running end-to-end tests
 
-Les tests E2E utilisent [Playwright](https://playwright.dev/) avec une authentification MSAL v4 mockée (Solution C — mock complet, aucun accès Azure AD réel).
-
-### Prérequis
+For end-to-end (e2e) testing, run:
 
 ```bash
-npm install                         # Installe @playwright/test
-npx playwright install chromium     # Installe le navigateur de test
+ng e2e
 ```
 
-### Génération automatique du storage state (user.json)
-
-Le fichier `.auth/user.json` contient un token fictif injecté dans le localStorage pour bypasser Azure AD. Il est **généré automatiquement** à chaque `npm run e2e` via le projet `setup` (dependency déclarée dans `playwright.config.ts`).
-
-> **.auth/ est dans .gitignore** — chaque développeur génère son propre fichier localement.
-
-### Scripts disponibles
-
-```bash
-npm run e2e              # Lance tous les tests (setup + e2e)
-npm run e2e:setup        # Régénère uniquement .auth/user.json (npm start requis)
-npm run e2e:headed       # Tests avec navigateur visible
-npm run e2e:ui           # Interface graphique Playwright
-npm run e2e:report       # Affiche le rapport HTML du dernier run
-```
-
-### Procédure complète pour un nouveau développeur
-
-```bash
-# 1. Démarrer l'application Angular (dans un terminal séparé)
-npm start
-
-# 2. Dans un second terminal, lancer les tests
-npm run e2e
-```
-
-La première exécution crée `.auth/user.json`. Les runs suivants le réutilisent (valide 90 jours).
-
-> Si les tests échouent avec "No such file: user.json" ou "token expired", supprimer `.auth/user.json`
-> et relancer `npm run e2e` ou `npm run e2e:setup`.
+Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
 
 ## Additional Resources
 

@@ -36,13 +36,8 @@ yarn-error.log
 /libpeerconnection.log
 testem.log
 /typings
-_ai-context/
+__screenshots__/
 
 # System files
 .DS_Store
 Thumbs.db
-
-# Playwright — storage state (contient des tokens E2E, ne pas versionner)
-.auth/
-test-results/
-playwright-report/

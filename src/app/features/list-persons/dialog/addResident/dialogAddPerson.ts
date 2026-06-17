@@ -1,16 +1,16 @@
 import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
-import { FormBuilder} from '@angular/forms';
 import { AileRepository } from '../../../../shared/repository/aile.repository';
 import { PersonFormFactory } from '../../../../shared/helper/formFactory/person';
-import { IPersonFirestore } from '../../../../shared/models/person';
 import { IAile } from '../../../../shared/models/aile';
+import { PrimeExportModule } from '../../../../shared/primeModuleExport.module';
+import { SharedExportModule } from '../../../../shared/sharedExport.module';
 
 
 @Component({
-    standalone: false,
     templateUrl: './dialogAddPerson.html',
-        changeDetection: ChangeDetectionStrategy.OnPush,  // ← ajouter ici
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [ SharedExportModule, PrimeExportModule ]
 })
 export class DialogAddPerson implements OnInit {
 

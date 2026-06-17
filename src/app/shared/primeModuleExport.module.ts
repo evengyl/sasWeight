@@ -40,25 +40,6 @@ import { SelectButtonModule } from 'primeng/selectbutton';
 
 
 
-//const preset = definePreset(Aura, PlectrumTokens);
-const preset = definePreset(Aura, {
-  semantic: {
-    primary: {
-      50: '{sky.50}',
-      100: '{sky.100}',
-      200: '{sky.200}',
-      300: '{sky.300}',
-      400: '{sky.400}',
-      500: '{sky.500}',
-      600: '{sky.600}',
-      700: '{sky.700}',
-      800: '{sky.800}',
-      900: '{sky.900}',
-      950: '{sky.950}',
-    },
-  },
-});
-
 @NgModule({
   declarations: [],
   imports: [
@@ -96,32 +77,7 @@ const preset = definePreset(Aura, {
     DynamicDialogModule,
     DialogModule,
     InputNumberModule,
-    SelectButtonModule
-  ],
-  providers: [
-    providePrimeNG({
-      theme: {
-        preset: Aura,
-        options: {
-          darkModeSelector: '.app-dark',
-        },
-      },
-      translation: {
-        firstDayOfWeek: 1,
-        dayNames: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
-        dayNamesShort: ['Dim', 'Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam'],
-        dayNamesMin: ['Di', 'Lu', 'Ma', 'Me', 'Je', 'Ve', 'Sa'],
-        monthNames: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
-        monthNamesShort: ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Jun', 'Jul', 'Aoû', 'Sep', 'Oct', 'Nov', 'Déc'],
-        today: "Aujourd'hui",
-        clear: 'Effacer',
-        weekHeader: 'Sem',
-        dateFormat: 'dd/mm/yy',
-      },
-    }),
-    MessageService,
-    ConfirmationService,
-    DialogService,
+    SelectButtonModule,
   ],
   exports: [
     ButtonModule,

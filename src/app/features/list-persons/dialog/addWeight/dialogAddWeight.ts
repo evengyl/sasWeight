@@ -1,9 +1,11 @@
-import { Component, inject, OnInit } from '@angular/core';
-import { DialogService, DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { Component, inject } from '@angular/core';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { PrimeExportModule } from '../../../../shared/primeModuleExport.module';
+import { SharedExportModule } from '../../../../shared/sharedExport.module';
 
 @Component({
-    standalone: false,
     templateUrl: './dialogAddWeight.html',
+    imports : [SharedExportModule, PrimeExportModule],
 })
 export class DialogAddWeight {
     private readonly config = inject(DynamicDialogConfig);

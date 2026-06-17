@@ -5,12 +5,14 @@ import { PersonFormFactory } from '../../../../shared/helper/formFactory/person'
 import { IAile } from '../../../../shared/models/aile';
 import { PersonService } from '../../../../shared/services/person.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { SharedExportModule } from '../../../../shared/sharedExport.module';
+import { PrimeExportModule } from '../../../../shared/primeModuleExport.module';
 
 
 @Component({
-    standalone: false,
     templateUrl: './dialogEditPerson.html',
-        changeDetection: ChangeDetectionStrategy.OnPush,  // ← ajouter ici
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [ SharedExportModule, PrimeExportModule ]
 })
 export class DialogEditPerson implements OnInit {
 

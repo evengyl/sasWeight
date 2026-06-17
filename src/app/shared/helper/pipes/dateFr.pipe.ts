@@ -1,11 +1,10 @@
-import { Pipe } from "@angular/core";
-import { listMonthsWithNumber } from "../utils/others";
+import { Pipe, PipeTransform } from "@angular/core";
+import { listMonthsWithNumber } from "../../utils/others";
 
 @Pipe({
     name: 'dateFr',
-    standalone: false
 })
-export class DateFrPipe {
+export class DateFrPipe implements PipeTransform {
 
     private readonly listMonthsWithNumber = listMonthsWithNumber;
 

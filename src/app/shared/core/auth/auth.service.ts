@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { inject, Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import {
   Auth,
@@ -12,11 +12,10 @@ import {
 @Injectable({ providedIn: 'root' })
 export class AuthService {
 
-  
-    user$: Observable<User | null>;
+  user$: Observable<User | null>;
 
-
-  constructor(private readonly afAuth: Auth) {
+  private readonly afAuth: Auth = inject(Auth);
+  constructor() {
     this.user$ = user(this.afAuth);
   }
 
