@@ -24,8 +24,8 @@ export class LoginComponent {
 
     constructor() {
         this.form = this.fb.group({
-            email: ['infi@arbredejade.be', [Validators.required, Validators.email]],
-            password: ['InfiJade__', Validators.required]
+            email: ['', [Validators.required, Validators.email]],
+            password: ['', Validators.required]
         });
 
         effect(() => {
