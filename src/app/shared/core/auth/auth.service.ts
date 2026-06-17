@@ -24,6 +24,7 @@ export class AuthService {
   login(email: string, password: string) {
     signInWithEmailAndPassword(this.afAuth, email, password).then(() => {
       this.messageService.add({ severity: 'success', summary: 'Succès', detail: 'Connexion réussie' });
+      this.router.navigate(['/']);
     })
     .catch(() => {
       this.messageService.add({ severity: 'error', summary: 'Erreur', detail: 'Erreur lors de la connexion' });

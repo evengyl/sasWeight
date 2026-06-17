@@ -1,9 +1,10 @@
 import { Component, effect, inject, Signal } from "@angular/core";
-import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from "@angular/forms";
+import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { AuthService } from "../../shared/core/auth/auth.service";
 import { PrimeExportModule } from "../../shared/primeModuleExport.module";
 import { SharedExportModule } from "../../shared/sharedExport.module";
+import { environment } from "../../../environments/environment";
 
 @Component({
     selector: "app-login",
@@ -28,6 +29,9 @@ export class LoginComponent {
             password: ['', Validators.required]
         });
 
+        //si developpement, auto login
+        console.log(environment);
+
         effect(() => {
             if(this.authState()) {
                 this.router.navigate(['/']);
@@ -40,39 +44,15 @@ export class LoginComponent {
         if (this.form.invalid) return;
 
         this.loading = true;
-        this.error = null;
-
         const { email, password } = this.form.value;
-
-        try {
-            await this.auth.login(email, password);
-
-            // Redirection après login
-            this.router.navigate(['/']);
-        } catch (err: any) {
-            this.error = this.mapError(err.code);
-        } finally {
-            this.loading = false;
-        }
+        this.auth.login(email, password);
+        this.loading = false;
     }
 
     
-    async logout() {
-
-        await this.auth.logout();
+    logout()
+    {
+        this.auth.logout();
         this.router.navigate(['/login']);
     }
-
-
-    private mapError(code: string): string {
-        switch (code) {
-            case 'auth/user-not-found':
-                return 'Utilisateur inconnu';
-            case 'auth/wrong-password':
-                return 'Mot de passe incorrect';
-            default:
-                return 'Erreur de connexion';
-        }
-    }
-
 }
