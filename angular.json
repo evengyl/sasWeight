@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "sasWeight": {
+    "sasweight": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -61,10 +61,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "sasWeight:build:production"
+              "buildTarget": "sasweight:build:production"
             },
             "development": {
-              "buildTarget": "sasWeight:build:development"
+              "buildTarget": "sasweight:build:development"
             }
           },
           "defaultConfiguration": "development"
