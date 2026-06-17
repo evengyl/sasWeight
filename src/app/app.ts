@@ -9,5 +9,4 @@ import { HeaderComponent } from './templates/header/header.component';
   styleUrl: './app.scss'
 })
 export class App {
-  protected readonly title = signal('sasWeightStand');
 }
