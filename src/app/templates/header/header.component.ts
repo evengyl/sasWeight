@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { SharedExportModule } from '../../shared/sharedExport.module';
+import { SharedExportModule } from '../../shared/shared.module';
 
 @Component({
   selector: 'app-header',

@@ -1,12 +1,12 @@
 import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { AileRepository } from '../../../../shared/repository/aile.repository';
-import { PersonFormFactory } from '../../../../shared/helper/formFactory/person';
+import { PersonFormFactory } from '../../../../shared/helper/formFactory/person.form';
 import { IAile } from '../../../../shared/models/aile';
 import { PersonService } from '../../../../shared/services/person.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { SharedExportModule } from '../../../../shared/sharedExport.module';
-import { PrimeExportModule } from '../../../../shared/primeModuleExport.module';
+import { SharedExportModule } from '../../../../shared/shared.module';
+import { PrimeExportModule } from '../../../../shared/prime.module';
 
 
 @Component({

@@ -1,6 +1,4 @@
-import {  IPersonFirestore, IPersonUI,   } from "../models/person";
-
-
+import { IPersonUI, IPersonFirestore } from "../../models/person";
 
 export class PersonMapper {
     static mapper_personUI_personFirestore(person: IPersonUI): IPersonFirestore {

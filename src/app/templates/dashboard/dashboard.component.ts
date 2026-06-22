@@ -3,7 +3,9 @@ import { ListPersonsComponent } from '../../features/list-persons/list-persons.c
 
 @Component({
   selector: 'app-dashboard',
-  template: '<app-list-persons></app-list-persons>',
+  template: `
+    <app-list-persons></app-list-persons>
+  `,
   imports: [ListPersonsComponent]
 })
 export class DashboardComponent {}

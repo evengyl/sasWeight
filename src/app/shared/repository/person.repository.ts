@@ -1,10 +1,10 @@
 import { inject, Injectable, signal, WritableSignal } from "@angular/core";
 import { getDocs } from "@angular/fire/firestore";
 import { IPersonFirestore, IPersonUI } from "../models/person";
-import { PersonMapper } from "../mapper/person.mapper";
 import { dbFirebase } from "../core/dbFirebase";
 import { PersonsToLoad } from "../core/mocksDataTest/person.mock";
 import { MessageService } from "primeng/api";
+import { PersonMapper } from "../helper/mapper/person.mapper";
 
 
 @Injectable({

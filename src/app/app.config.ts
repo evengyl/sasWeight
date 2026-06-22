@@ -11,6 +11,7 @@ import { getAuth, provideAuth } from '@angular/fire/auth';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
 import { provideAnimations } from '@angular/platform-browser/animations';
+import { provideHttpClient } from '@angular/common/http';
 
 
 registerLocaleData(localeFr, 'fr-FR');
@@ -35,6 +36,7 @@ export const appConfig: ApplicationConfig = {
     MessageService,
     ConfirmationService,
     DialogService,
+    provideHttpClient(),
     provideAnimations(),
     provideBrowserGlobalErrorListeners(),
     provideZoneChangeDetection({ eventCoalescing: true }),

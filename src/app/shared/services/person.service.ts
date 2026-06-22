@@ -1,7 +1,7 @@
 import { effect, inject, Injectable, signal, WritableSignal } from "@angular/core";
 import { MessageService } from "primeng/api";
 import { IPersonFirestore, IPersonUI } from "../models/person";
-import { listMonthsWithNumber } from "../utils/others";
+import { listMonthsWithNumber } from "../helper/others";
 import { PersonRepository } from "../repository/person.repository";
 
 @Injectable({

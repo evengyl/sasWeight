@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
-import { PrimeExportModule } from '../../../../shared/primeModuleExport.module';
-import { SharedExportModule } from '../../../../shared/sharedExport.module';
+import { PrimeExportModule } from '../../../../shared/prime.module';
+import { SharedExportModule } from '../../../../shared/shared.module';
 
 @Component({
     templateUrl: './dialogAddWeight.html',

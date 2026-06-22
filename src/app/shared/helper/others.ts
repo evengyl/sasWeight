@@ -1,6 +1,7 @@
 /**
  * Contient la liste des mois de l'année en français.
- * Cette constante peut être utilisée dans toute l'application pour référencer les mois de manière cohérente.
+ * Les id correspondent au numéro du mois (1 pour Janvier, 2 pour Février, etc.)
+ * Cette liste peut être utilisée pour des sélecteurs de mois dans les formulaires ou pour toute autre fonctionnalité nécessitant une référence aux mois de l'année.
  */
 export const listMonthsWithNumber = [
     { id : 1, name : "Janvier"},

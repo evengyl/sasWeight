@@ -1,154 +1,165 @@
-<div class="bg-surface-50 dark:bg-surface-950 px-6 py-20 md:px-0 lg:px-20 pt-0 text-sm">
-
-    <div class="card flex flex-col">
-        
-        <p-table 
-            [loading]="loadingData()" 
-            sortField="aileName" 
-            [sortOrder]="-1"
-            [value]="personList()" 
-            [size]="'small'"
-            #dt2
-            [globalFilterFields]="['name', 'surname', 'chambreNumber', 'aileName']"
-            [tableStyle]="{ 'min-width': '100%' }"
-            dataKey="id"
-        >
-            <ng-template #caption>
-                <div class="flex">
-                    <p-button 
-                        title="Ajouter un résident" 
-                        icon="pi pi-plus" 
-                        (click)="addPerson()" 
-                        label="Ajouter un résident" 
-                        severity="contrast"
-                        (keydown.enter)="null"
-                    />
-                    <p-iconfield iconPosition="left" class="ml-auto">
-                        <p-inputicon>
-                            <i class="pi pi-search"></i>
-                        </p-inputicon>
-                        <input pInputText type="text" (input)="dt2.filterGlobal($event.target.value, 'contains')" placeholder="Recherche par mot clé" />
-                    </p-iconfield>
-                        
-                </div>
-            </ng-template>
 
 
-            <ng-template #header>
-                <tr>
-                    <th scope="col" style="width: 15%">
-                        <div class="flex items-center gap-2">
-                            Gestion des poids (cliquer pour dérouler)
-                        </div>
-                    </th>
-                    <th scope="col" pSortableColumn="name">
-                        <div class="flex items-center gap-2">
-                            Nom
-                            <p-sortIcon field="name" />
-                        </div>
-                    </th>
-                    <th scope="col" pSortableColumn="surname">
-                        <div class="flex items-center gap-2">
-                            Prénom
-                            <p-sortIcon field="surname" />
-                        </div>
-                    </th>
-                    <th scope="col" pSortableColumn="chambreNumber">
-                        <div class="flex items-center gap-2">
-                            Chambre
-                            <p-sortIcon field="chambreNumber" />
-                        </div>
-                    </th>
-                    <th scope="col" pSortableColumn="aileName">
-                        <div class="flex items-center gap-2">
-                            Aile
-                            <p-sortIcon field="aileName" />
-                        </div>
-                    </th>
-                    <th scope="col">
-                        <div class="flex items-center gap-2">
-                            Dernier poids enregistré
-                        </div>
-                    </th>
-                    <th scope="col">Action</th>
-                </tr>
-            </ng-template>
+@if(stateOnlineWWW())
+{
+    <div class="bg-surface-50 dark:bg-surface-950 px-6 py-20 md:px-0 lg:px-20 pt-0 text-sm">
 
-            <ng-template #body let-person let-editing="editing" let-expanded="expanded" let-ri="rowIndex">
-                
-                <tr [style.background-color]="getRowBgColor(person)">
-                    <td>
-                        <p-button type="button" pRipple [pRowToggler]="person" [text]="true" severity="secondary"  [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'" />
-                    </td>
-                    <td>
-                        {{ person.name }}
-                    </td>
-                    <td>
-                        {{ person.surname }}
-                    </td>
-                    <td>
-                        {{ person.chambreNumber }}
-                    </td>
-                    <td>
-                        {{ person.aileName }}
-                    </td>
-                    <td>
-                        {{ person.lastWeight?.date | dateFr }} 
-                        {{ person.lastWeight ? '- ' + person.lastWeight.weight + ' kg' : 'Aucun poids enregistré' }}
-                    </td>
-                    <td>
-                        <div [ngClass]="editing ? 'flex-col' : 'flex-row'" class="flex items-center justify-center gap-1">
-                            <p-button 
-                                title="Editer" 
-                                *ngIf="!editing" 
-                                icon="pi pi-pencil"
-                                (click)="editPerson(person)" 
-                                label="Editer" 
-                                severity="danger"
-                                (keydown.enter)="null"
-                                size="small" 
-                            />
-                        </div>
-                    </td>
-                </tr>
-            </ng-template>
+        <div class="card flex flex-col">
+            
+            <p-table 
+                [loading]="loadingData()" 
+                sortField="aileName" 
+                [sortOrder]="-1"
+                [value]="personList()" 
+                [size]="'small'"
+                #dt2
+                [globalFilterFields]="['name', 'surname', 'chambreNumber', 'aileName']"
+                [tableStyle]="{ 'min-width': '100%' }"
+                dataKey="id"
+            >
+                <ng-template #caption>
+                    <div class="flex">
+                        <p-button 
+                            title="Ajouter un résident" 
+                            icon="pi pi-plus" 
+                            (click)="addPerson()" 
+                            label="Ajouter un résident" 
+                            severity="contrast"
+                            (keydown.enter)="null"
+                        />
+                        <p-iconfield iconPosition="left" class="ml-auto">
+                            <p-inputicon>
+                                <i class="pi pi-search"></i>
+                            </p-inputicon>
+                            <input pInputText type="text" (input)="dt2.filterGlobal($event.target.value, 'contains')" placeholder="Recherche par mot clé" />
+                        </p-iconfield>
+                            
+                    </div>
+                </ng-template>
 
 
-            <!-- remplacer #expandedrow par #expansion -->
-            <ng-template #expandedrow let-person>
-                <tr>
-                    <td colspan="6">
-                    
-                        <div class="card flex items-center gap-2 flex-wrap">
-                            <div class="mb-1 p-1">
-                                @for(mapperWeight of person.listWeightForTemplate; track mapperWeight[0])
-                                {
-                                    <p-card header="Année {{mapperWeight[0]}}" class="card mb-4">
-                                        <div class="flex items-center gap-4 flex-wrap">   <!-- ← ajouter ce div -->
-                                            @for(monthWeighted of mapperWeight[1]; track monthWeighted.monthStr)
-                                            {
-                                                <p-chip 
-                                                    (click)="editMonthClicked(person, monthWeighted.monthStr, mapperWeight[0])"
-                                                    class="cursor-pointer"
-                                                    (keydown.enter)="null"
-                                                >
-                                                    <span [ngClass]="getClassSeverity(monthWeighted)" class="text-primary-contrast rounded-full w-8 h-8 flex items-center justify-center">
-                                                        <i [ngClass]="getClassIcon(monthWeighted)" class="pi"></i>
-                                                    </span>
-                                                    <span class="ml-2 font-medium">{{monthWeighted.monthStr}}<br>{{monthWeighted.weight}}</span>
-                                                </p-chip>
-                                            }
-                                        </div>
-                                    </p-card>
-                                }
+                <ng-template #header>
+                    <tr>
+                        <th scope="col" style="width: 15%">
+                            <div class="flex items-center gap-2">
+                                Gestion des poids (cliquer pour dérouler)
                             </div>
-                        </div>
-                    </td>
-                </tr>
-            </ng-template>
-        </p-table>
+                        </th>
+                        <th scope="col" pSortableColumn="name">
+                            <div class="flex items-center gap-2">
+                                Nom
+                                <p-sortIcon field="name" />
+                            </div>
+                        </th>
+                        <th scope="col" pSortableColumn="surname">
+                            <div class="flex items-center gap-2">
+                                Prénom
+                                <p-sortIcon field="surname" />
+                            </div>
+                        </th>
+                        <th scope="col" pSortableColumn="chambreNumber">
+                            <div class="flex items-center gap-2">
+                                Chambre
+                                <p-sortIcon field="chambreNumber" />
+                            </div>
+                        </th>
+                        <th scope="col" pSortableColumn="aileName">
+                            <div class="flex items-center gap-2">
+                                Aile
+                                <p-sortIcon field="aileName" />
+                            </div>
+                        </th>
+                        <th scope="col">
+                            <div class="flex items-center gap-2">
+                                Dernier poids enregistré
+                            </div>
+                        </th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </ng-template>
+
+                <ng-template #body let-person let-editing="editing" let-expanded="expanded" let-ri="rowIndex">
+                    
+                    <tr [style.background-color]="getRowBgColor(person)">
+                        <td>
+                            <p-button type="button" pRipple [pRowToggler]="person" [text]="true" severity="secondary"  [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'" />
+                        </td>
+                        <td>
+                            {{ person.name }}
+                        </td>
+                        <td>
+                            {{ person.surname }}
+                        </td>
+                        <td>
+                            {{ person.chambreNumber }}
+                        </td>
+                        <td>
+                            {{ person.aileName }}
+                        </td>
+                        <td>
+                            {{ person.lastWeight?.date | dateFr }} 
+                            {{ person.lastWeight ? '- ' + person.lastWeight.weight + ' kg' : 'Aucun poids enregistré' }}
+                        </td>
+                        <td>
+                            <div [ngClass]="editing ? 'flex-col' : 'flex-row'" class="flex items-center justify-center gap-1">
+                                <p-button 
+                                    title="Editer" 
+                                    *ngIf="!editing" 
+                                    icon="pi pi-pencil"
+                                    (click)="editPerson(person)" 
+                                    label="Editer" 
+                                    severity="danger"
+                                    (keydown.enter)="null"
+                                    size="small" 
+                                />
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+
+
+                <!-- remplacer #expandedrow par #expansion -->
+                <ng-template #expandedrow let-person>
+                    <tr>
+                        <td colspan="6">
+                        
+                            <div class="card flex items-center gap-2 flex-wrap">
+                                <div class="mb-1 p-1">
+                                    @for(mapperWeight of person.listWeightForTemplate; track mapperWeight[0])
+                                    {
+                                        <p-card header="Année {{mapperWeight[0]}}" class="card mb-4">
+                                            <div class="flex items-center gap-4 flex-wrap">   <!-- ← ajouter ce div -->
+                                                @for(monthWeighted of mapperWeight[1]; track monthWeighted.monthStr)
+                                                {
+                                                    <p-chip 
+                                                        (click)="editMonthClicked(person, monthWeighted.monthStr, mapperWeight[0])"
+                                                        class="cursor-pointer"
+                                                        (keydown.enter)="null"
+                                                    >
+                                                        <span [ngClass]="getClassSeverity(monthWeighted)" class="text-primary-contrast rounded-full w-8 h-8 flex items-center justify-center">
+                                                            <i [ngClass]="getClassIcon(monthWeighted)" class="pi"></i>
+                                                        </span>
+                                                        <span class="ml-2 font-medium">{{monthWeighted.monthStr}}<br>{{monthWeighted.weight}}</span>
+                                                    </p-chip>
+                                                }
+                                            </div>
+                                        </p-card>
+                                    }
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
     </div>
-</div>
+}
+@else{
+    <div class="flex flex-col items-center justify-center h-screen gap-4">
+        <p class="text-2xl font-bold">Le site est actuellement hors ligne.</p>
+        <p class="text-lg text-gray-600">Veuillez réessayer plus tard.</p>
+    </div>
+}
 
 <p-confirmdialog />
 

@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from "@angular/core";
-import { listMonthsWithNumber } from "../../utils/others";
+import { listMonthsWithNumber } from "../others";
 
 @Pipe({
     name: 'dateFr',

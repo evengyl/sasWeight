@@ -1,6 +1,6 @@
 import { Component, effect, inject, Signal } from '@angular/core';
-import { PrimeExportModule } from '../../shared/primeModuleExport.module';
-import { SharedExportModule } from '../../shared/sharedExport.module';
+import { PrimeExportModule } from '../../shared/prime.module';
+import { SharedExportModule } from '../../shared/shared.module';
 import { AuthService } from '../../shared/core/auth/auth.service';
 
 @Component({

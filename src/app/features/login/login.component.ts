@@ -2,8 +2,8 @@ import { Component, effect, inject, Signal } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { AuthService } from "../../shared/core/auth/auth.service";
-import { PrimeExportModule } from "../../shared/primeModuleExport.module";
-import { SharedExportModule } from "../../shared/sharedExport.module";
+import { PrimeExportModule } from "../../shared/prime.module";
+import { SharedExportModule } from "../../shared/shared.module";
 import { environment } from "../../../environments/environment";
 
 @Component({

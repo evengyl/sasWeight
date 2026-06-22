@@ -7,11 +7,12 @@ import { take } from 'rxjs';
 import { AileRepository } from '../../shared/repository/aile.repository';
 import { IPersonUI } from '../../shared/models/person';
 import { IAile } from '../../shared/models/aile';
-import { listMonthsWithNumber } from '../../shared/utils/others';
+import { listMonthsWithNumber } from '../../shared/helper/others';
 import { DialogEditPerson } from './dialog/editResident/dialogEditPerson';
-import { PrimeExportModule } from '../../shared/primeModuleExport.module';
+import { PrimeExportModule } from '../../shared/prime.module';
 import { DateFrPipe } from '../../shared/helper/pipes/dateFr.pipe';
-import { SharedExportModule } from '../../shared/sharedExport.module';
+import { SharedExportModule } from '../../shared/shared.module';
+import { AppService } from '../../shared/services/app.service';
 
 
 @Component({
@@ -26,10 +27,12 @@ export class ListPersonsComponent implements OnInit {
   private readonly personService = inject(PersonService);
   private readonly dialogService = inject(DialogService);
   private readonly aileRepository = inject(AileRepository);
+  private readonly appService = inject(AppService);
 
 
   readonly personList = this.personService.listPerson_S;
   readonly loadingData = this.personService.loadingData;
+  readonly stateOnlineWWW = this.appService.stateOnlineWWW;
 
   listAiles: IAile[] = null;
 
